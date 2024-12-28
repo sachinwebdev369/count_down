@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>count down</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(145, 145, 167);
+}
+
+.box {
+    background-color: rgb(243, 250, 241);
+    width: 90%;
+    max-width: 500px;
+    min-height: 200px;
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 0 12px rgba(46, 45, 45, 0.667);
+}
+
+.box h4 {
+    text-align: center;
+    font-size: 1.6em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1.4px;
+    font-weight: 700;
+    margin-bottom: 1.5em;
+    color: rgb(22, 27, 41);
+}
+
+input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+.timer input {
+    padding: 4px;
+    width: 45px ;
+    height: 44px;
+    font-size: 1.5em;
+    text-align: center;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 0 3px 1px rgba(105, 103, 103, 0.652);
+}
+
+
+/* .box .countdown .countLabel{
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+display: flex;
+justify-content: center;
+gap: 1.4em;
+font-size: 1.2em;
+} */
+
+.timer_wrapper {
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+    gap: 1em;
+    margin-top: 1.5em;
+}
+
+.timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
+}
+
+.timer label {
+    font-size: 1.1em;
+    color: rgb(76, 88, 77);
+
+}
+.no-semicolon {
+    opacity: 0;
+}
+.timer .semicolon {
+    font-size: 1.8em;
+    color: blue;
+}
+
+.buttons {
+display: flex;
+margin-top: 1.8rem;
+gap: 15px;
+margin-top: 2.5em;
+}
+
+.buttons button {
+    padding: 9px 14px;
+    flex-basis: 50%;
+    font-size: 1.2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 0;
+    border-radius: 4px;
+}
+button:hover{
+    opacity: 0.9;
+}
+button:active{
+    opacity: 0.7;
+}
+button#start {
+    background-color: rgb(92, 127, 39);
+    color: white;
+}
+/* button#start {
+    background-color: rgb(154, 149, 47);
+    color: white;
+} */
+button#reset {
+    background-color: rgb(162, 51, 51);
+color: white;
+}
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="box">
+            <h4>Count Down</h4>
+            <div class="countdown">
+                <!-- <div class="countLabel">
+                    <label for="hours">Hours</label>
+                    <label for="minutes">Minutes</label>
+                    <label for="seconds">seconds</label>
+                </div>
+                <div class="countInput">
+                    <input type="number" id="hours" placeholder="00">
+                    <input type="number" id="minutes" placeholder="00">
+                    <input type="number" id="seconds" placeholder="00">
+                </div> -->
+                <div class="timer_wrapper">
+                <div class="timer">
+                    <label for="hours">Hours</label>
+                    <input type="number" id="hours" placeholder="00">
+                </div>
+                <div class="timer">
+<span class="no-semicolon"> :</span>
+<span class="semicolon">:</span>
+                </div>
+                <div class="timer">
+                    <label for="minutes">Minutes</label>
+                    <input type="number" id="minutes" placeholder="00">
+                </div>
+                <div class="timer">
+                    <span class="no-semicolon"> :</span>
+                    <span class="semicolon">:</span>
+                                    </div>
+                <div class="timer">
+                    <label for="seconds">Seconds</label>
+                    <input type="number" id="seconds" placeholder="00">
+                </div>
+            </div>
+<div class="buttons">
+    <button id="start">Start</button>
+    <button id="reset">reset</button>
+</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+let secondsInput = document.querySelector('#seconds')
+let minutesInput = document.querySelector('#minutes')
+let hoursInput = document.querySelector('#hours')
+
+let startBtn = document.querySelector('#start')
+let resetBtn = document.querySelector('#reset')
+let currentInterval;
+
+startBtn.addEventListener('click', ()=> {
+    // console.log(secondsInput.value)
+    if(secondsInput.value == 0 && minutesInput.value == 0 && hoursInput.value == 0 ) return false
+    if(startBtn.innerHTML == 'pause') {
+        return stopInterval()
+    }
+    currentInterval = setInterval(()=> {
+        timer()
+        
+    }, 1000)
+    startBtn.innerHTML= 'pause'
+    startBtn.style.background = 'rgb(154, 149, 47)'
+    console.log(secondsInput.value)
+    console.log(currentInterval)
+})
+
+const timer = () => {
+    console.log('timer')
+
+if(secondsInput.value > 60) {
+    minutesInput.value++;
+    secondsInput.value = parseInt(secondsInput.value) - 59
+}
+if(minutesInput.value > 60) {
+    hoursInput.value++;
+    minutesInput.value = parseInt(minutesInput.value) - 60
+}
+
+    if(secondsInput.value == 0 && minutesInput.value == 0 && hoursInput.value == 0 ) {
+        secondsInput.value = '';
+     minutesInput.value =  '';
+      hoursInput.value =  '';
+     stopInterval()
+    }
+
+
+    if(secondsInput.value != 0) {
+        secondsInput.value = `${secondsInput.value > 10? '' : '0'}${secondsInput.value - 1}`
+    }
+
+    if(minutesInput.value != 0 && secondsInput.value == 0) {
+        
+        secondsInput.value = 60
+         minutesInput.value = `${minutesInput.value > 10? '' : '0'}${minutesInput.value - 1}`
+    }
+
+    if(hoursInput.value != 0 && minutesInput.value == 0) {
+        
+        minutesInput.value = 60
+         hoursInput.value = `${hoursInput.value > 10? '' : '0'}${hoursInput.value - 1}`
+    }
+}
+
+resetBtn.addEventListener('click', ()=> {
+    secondsInput.value = '';
+     minutesInput.value =  '';
+      hoursInput.value =  '';
+    stopInterval()
+    })
+
+const stopInterval = () => {
+    clearInterval(currentInterval)
+    startBtn.style.background = 'rgb(92, 127, 39)'
+
+    startBtn.innerHTML = 'start'
+    
+} 
+    </script>
+</body>
+</html>
